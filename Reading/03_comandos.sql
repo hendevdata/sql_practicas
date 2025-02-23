@@ -84,4 +84,59 @@ SELECT avg(age) FROM users WHERE age = 15; --
 -- ES UN LIMITE, PARA VER SI APARECE EL QUERY EN EL CODIGO
 
 SELECT * FROM users WHERE name IN ('Sara', 'Juan'); -- CON ESTE COMANDO FILTRAMOS DIFERENTES VALORES
-SELECT * FROM users WHERE email IS NOT NULL WHERE NAME IN ('Henry')
+SELECT * FROM users  WHERE name IN ('Henry', 'Sara')
+
+-- BETWEEN 
+-- SE USA PARA PODER CONSEGUIR VALORES ENTRE UN MINIMO Y UN MAXIMO
+SELECT * FROM users  WHERE age BETWEEN 20 AND 30;
+SELECT * FROM users  WHERE age BETWEEN 20 AND 30 AND name = 'Sara';
+
+-- ALIAS 
+-- SE USA PARA PODER DARLE UN NOMBRE A UNA COLUMNA
+
+SELECT name , init_date AS 'fecha de inicio en programcion'  FROM users   WHERE age BETWEEN 20 AND 30;
+SELECT name, init_date AS "Fecha de inicio en programacion" FROM users WHERE name = "Henry";
+SELECT name, init_date AS "Fecha de inicio de programacion" FROM users  WHERE name  = "Henry" AND age = 30;
+
+-- CONCAT
+-- SE USA PARA PODER CONCATENAR DOS COLUMNAS
+
+SELECT CONCAT(name,' ', surname) FROM users 
+
+-- GROUP BY
+-- SE USA PARA PODER AGRUPAR LOS DATOS DE UNA COLUMNA CON LOS MISMOS VALORES
+SELECT name , COUNT(*) FROM users GROUP BY name;
+SELECT COUNT(age),age FROM users GROUP BY age;
+SELECT COUNT(age),age FROM users GROUP BY age ORDER BY age ASC;
+SELECT COUNT(age),age FROM users WHERE age > 15 GROUP BY age ORDER BY age ASC;
+
+-- HAVING
+-- SE USA PARA PODER FILTRAR LOS DATOS DE UNA COLUMNA AGRUPADA
+SELECT COUNT(age),age FROM users GROUP BY age HAVING age > 15 ORDER BY age ASC;
+
+-- Case
+-- SE USA PARA PODER HACER UNA CONDICIONAL
+
+SELECT * , 
+CASE
+	WHEN age >= 17 THEN 'Es mayor de edad'
+	ELSE 'Es menor de edad'
+END AS agetext
+FROM users;
+-- CAMPO BOOLEAN?
+
+SELECT *,
+CASE
+	WHEN age >= 17 THEN True
+    ELSE False
+END AS 'Es mayor de edad?'
+FROM users;
+
+-- IF NULL
+-- SE USA PARA PODER SABER SI UN CAMPO ES NULO
+SELECT name, last_name, IFNULL(age, 0) AS age FROM users;
+
+-- JOIN
+-- SE USA PARA PODER UNIR DOS TABLAS
+SELECT * FROM users JOIN skills ON users.id = skills.user_id;
+@
